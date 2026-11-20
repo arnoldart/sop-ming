@@ -315,11 +315,11 @@ Cakupan **tidak dipotong** — 7 modul dan 6 peran tetap. Yang dikompresi adalah
 
 | Sesi | Durasi | Fokus | Definisi selesai |
 |---|---|---|---|
-| Hari 1 pagi | 4 j | Fondasi | Workspace, skema Prisma + migrasi, seed 6 peran/3 departemen/12 SOP lintas status, login + `policy.ts` + `requireRole` + audit middleware. Bukti: 6 akun bisa login, 403 benar pada 4 uji negatif |
+| Hari 1 pagi | 4 j | Fondasi | Workspace, skema Prisma + migrasi, seed 6 peran/4 departemen/12 SOP lintas status, login + `policy.ts` + `requireRole` + audit middleware. Bukti: 6 akun bisa login, 403 benar pada 4 uji negatif |
 | Hari 1 siang | 4 j | Inti SOP | CRUD SOP, `transition()` 3 tahap, versioning, timeline approval, audit tertulis. Bukti: 1 SOP DRAFT→PUBLISHED; versi 2 menandai versi 1 `SUPERSEDED` |
 | Hari 1 malam | 3 j | Konsumsi | Daftar + cari + filter, detail SOP, konfirmasi idempoten, rekap kepatuhan |
 | Hari 2 pagi | 4 j | Sekunder | Dashboard (4 angka + 2 tabel), pengumuman, laporan pelanggaran, penampil audit |
-| Hari 2 siang | 4 j | Pemantapan | UI sesuai DESIGN.md + shell `image.png`, uji state machine + 10 uji integrasi, README |
+| Hari 2 siang | 4 j | Pemantapan | UI sesuai DESIGN.md + shell `image.png`, uji state machine + 17 uji integrasi, README |
 | Hari 2 malam | 2 j | Kumpul | `ASSUMPTIONS.md`, `PROGRESS.md`, `AI_USAGE.md`, video 3–5 menit, submit |
 
 **Garis berhenti:** pada akhir hari ke-2, apa pun statusnya, berhenti menulis fitur dan mulai menulis dokumentasi + rekam video. Dokumentasi dinilai eksplisit; fitur yang belum jadi cukup dinyatakan belum jadi.
