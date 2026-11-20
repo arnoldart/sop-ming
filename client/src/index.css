@@ -1,0 +1,196 @@
+@import 'tailwindcss';
+
+/* Token dari docs/DESIGN.md — emerald tunggal, tangga abu, hairline 1px, radius 6px. */
+@theme {
+  --color-primary: #3ecf8e;
+  --color-primary-deep: #24b47e;
+  --color-primary-soft: #d8f8e9;
+  --color-on-primary: #171717;
+
+  --color-canvas: #ffffff;
+  --color-canvas-soft: #fafafa;
+  --color-canvas-night: #1c1c1c;
+
+  --color-hairline: #dfdfdf;
+  --color-hairline-strong: #c7c7c7;
+  --color-hairline-cool: #ededed;
+
+  --color-ink: #171717;
+  --color-ink-mute: #707070;
+  --color-ink-mute-2: #9a9a9a;
+  --color-ink-faint: #b2b2b2;
+
+  --font-sans: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --shadow-l1: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-l2: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-l3: 0 16px 48px rgba(0, 0, 0, 0.12);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-canvas-soft);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* Display tier: weight 500 + negative tracking (DESIGN.md). */
+  h1 {
+    font-weight: 500;
+    letter-spacing: -0.72px;
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary-deep);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .card {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-lg);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    transition: background-color 120ms ease, border-color 120ms ease;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+  .btn-primary:hover {
+    background: var(--color-primary-deep);
+  }
+  .btn-primary:disabled {
+    background: var(--color-hairline);
+    color: var(--color-ink-faint);
+    cursor: not-allowed;
+  }
+
+  .btn-outline {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    border: 1px solid var(--color-hairline-strong);
+  }
+  .btn-outline:hover {
+    background: var(--color-canvas-soft);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink-mute);
+  }
+  .btn-ghost:hover {
+    background: var(--color-canvas-soft);
+    color: var(--color-ink);
+  }
+
+  .input {
+    width: 100%;
+    min-height: 36px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-sm);
+    background: var(--color-canvas);
+    font-size: 15px;
+    color: var(--color-ink);
+  }
+  .input::placeholder {
+    color: var(--color-ink-faint);
+  }
+  .input:focus {
+    border-color: var(--color-primary-deep);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(62, 207, 142, 0.18);
+  }
+
+  .label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink-mute);
+    margin-bottom: 6px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 12px;
+    line-height: 1.45;
+    border: 1px solid var(--color-hairline-cool);
+    color: var(--color-ink-mute);
+    background: var(--color-canvas);
+    white-space: nowrap;
+  }
+  .pill-primary {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+  .pill-soft {
+    background: var(--color-canvas-soft);
+  }
+
+  .prose-sop h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  .prose-sop h2 {
+    font-size: 18px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  .prose-sop p {
+    margin-bottom: 12px;
+    color: var(--color-ink);
+    line-height: 1.65;
+  }
+  .prose-sop ol,
+  .prose-sop ul {
+    margin: 0 0 12px 20px;
+    list-style: decimal;
+  }
+  .prose-sop li {
+    margin-bottom: 6px;
+    line-height: 1.6;
+  }
+}
