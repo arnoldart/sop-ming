@@ -5,7 +5,10 @@
 * **Versi:** 1.1.0
 * **Tanggal Ditetapkan:** 19 November 2026
 * **Target Penyelesaian:** 25 November 2026 (Timebox 1 Minggu)
-* **Dokumen Referensi:** [Buku Panduan Teknis PDF](file:///C:/Users/vivy/Documents/github/sop-ming/docs/Tes%20Teknis%20Full%20Stack%20Programmer%20-%20MING%20SOP%20Center.pdf)
+* **Dokumen Referensi:** 
+  * [Buku Panduan Teknis PDF](file:///C:/Users/vivy/Documents/github/sop-ming/docs/Tes%20Teknis%20Full%20Stack%20Programmer%20-%20MING%20SOP%20Center.pdf)
+  * [Panduan Desain UI/UX (DESIGN.md)](file:///C:/Users/pgfe/Bitb/sop-ming/docs/DESIGN.md)
+  * [PRD Desain & Spesifikasi Halaman (PRD_DESIGN.md)](file:///C:/Users/pgfe/Bitb/sop-ming/docs/PRD_DESIGN.md)
 
 ---
 
