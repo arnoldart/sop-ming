@@ -234,7 +234,7 @@ async function main() {
 
     const auditRows = [
       auditRow(s.ownerId, 'SOP_CREATED', 'Sop', sop.id, created),
-      ...steps.map((st) => auditRow(st.actorId, `SOP_${st.action}`, 'Sop', sop.id, st.at)),
+      ...steps.map((st) => auditRow(st.actorId, ({ SUBMIT: 'SOP_SUBMITTED', APPROVE: 'SOP_APPROVED', PUBLISH: 'SOP_PUBLISHED' } as const)[st.action], 'Sop', sop.id, st.at)),
     ];
 
     // Konfirmasi baca: sebagian karyawan departemen, sengaja tidak penuh.

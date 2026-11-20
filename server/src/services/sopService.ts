@@ -11,6 +11,14 @@ import { audit } from '../audit.js';
 import { AppError, conflict, forbidden, notFound } from '../http.js';
 
 const isPrivileged = (u: SessionUser) => u.role === 'HRD';
+
+/** Nama aksi di audit log memakai bentuk lampau agar terbaca di UI. */
+const AUDIT_ACTION: Record<SopAction, string> = {
+  SUBMIT: 'SOP_SUBMITTED',
+  APPROVE: 'SOP_APPROVED',
+  REJECT: 'SOP_REJECTED',
+  PUBLISH: 'SOP_PUBLISHED',
+};
 const canSeeEverything = (u: SessionUser) => u.role === 'HRD' || u.role === 'AUDITOR' || u.role === 'MANAJEMEN';
 
 /* ---------------- Baca ---------------- */
@@ -409,7 +417,7 @@ export async function transition(
 
   await audit(null, {
     actorId: user.id,
-    action: `SOP_${action}`,
+    action: AUDIT_ACTION[action],
     entityType: 'Sop',
     entityId: id,
     before: { status: sop.status },

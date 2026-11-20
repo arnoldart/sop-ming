@@ -12,10 +12,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "types": ["vite/client"],
-    "baseUrl": ".",
     "paths": {
       "@sop/shared": ["../shared/src/index.ts"],
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "vite.config.ts"]

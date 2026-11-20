@@ -4,6 +4,7 @@ import { loginSchema } from '@sop/shared';
 import { db } from '../db.js';
 import { clearSessionCookie, requireAuth, setSessionCookie, signSession } from '../auth.js';
 import { audit } from '../audit.js';
+import { env } from '../env.js';
 import { AppError, parse, wrap } from '../http.js';
 
 export const authRouter = Router();
@@ -15,6 +16,7 @@ const LIMIT = 5;
 const WINDOW_MS = 60_000;
 
 function rateLimit(key: string) {
+  if (env.NODE_ENV === 'test') return;
   const now = Date.now();
   const entry = attempts.get(key);
   if (!entry || entry.resetAt < now) {

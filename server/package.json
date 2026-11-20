@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "build": "tsc --noEmit -p tsconfig.json",
     "start": "tsx src/index.ts",
     "db:migrate": "prisma migrate dev --name init",
     "db:reset": "prisma migrate reset --force",
