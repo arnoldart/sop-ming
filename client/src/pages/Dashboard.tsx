@@ -97,7 +97,7 @@ function DashboardBody({ data }: { data: DashboardSummary }) {
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid items-start gap-4 lg:grid-cols-3">
         <Section
           title="Menunggu tindakan Anda"
           action={<SectionLink to="/sop">Semua SOP</SectionLink>}
