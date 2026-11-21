@@ -1,7 +1,7 @@
 # PROGRESS — MING SOP Center
 
-> Status per **2026-11-20**. Dokumen ini ditulis apa adanya: yang selesai
-> disebut dengan buktinya, yang belum disebut tanpa dibungkus.
+> Status per **2026-11-21**, commit `eb4e95c`. Dokumen ini ditulis apa adanya:
+> yang selesai disebut dengan buktinya, yang belum disebut tanpa dibungkus.
 
 ---
 
@@ -9,12 +9,14 @@
 
 Backend **selesai dan teruji**: 10 model, 23 endpoint, seluruh siklus SOP
 berjalan, RBAC ditegakkan di satu tempat, dan 23 tes hijau. Desain **selesai**:
-9 layar di `sop.fig`. Frontend **baru sebagian** — shell, komponen dasar, dan 2
-layar ada, tetapi belum ada entry point sehingga aplikasi belum bisa dijalankan
-di browser.
+10 layar di `sop.fig`, dengan Detail SOP dipecah menjadi 4 frame (total 13
+frame). Frontend **selesai dan tersambung ke API nyata**: 10 rute, seluruh aksi
+memakai `allowedActions` dari server, `npm run build` keluar 0, dan `npm test`
+tetap 23/23.
 
-Artinya: inti penilaian (logika, otorisasi, model data, desain) sudah bisa
-diperiksa sekarang; yang tersisa adalah menyambungkan UI ke API yang sudah ada.
+Artinya: aplikasi bisa dijalankan dan diperiksa end-to-end. Yang tersisa bukan
+fitur, melainkan deliverable serah terima: `README.md`, screenshot aplikasi
+asli, dan video demo.
 
 ---
 
@@ -22,18 +24,24 @@ diperiksa sekarang; yang tersisa adalah menyambungkan UI ke API yang sudah ada.
 
 | # | Deliverable | Status | Catatan |
 |---|---|---|---|
-| 1 | `README.md` — prasyarat, setup, akun seed, perintah uji | **Belum** | Akan ditulis setelah frontend bisa dijalankan, agar langkahnya sudah terbukti |
+| 1 | `README.md` — prasyarat, setup, akun seed, perintah uji | **Belum** | Aplikasi sudah berjalan, jadi langkahnya bisa ditulis dan dibuktikan dari clone bersih |
 | 2 | `docs/PRD.md` | **Selesai** | 366 baris, 10 user story dengan AC, matriks izin 6×11 |
 | 2 | `docs/ASSUMPTIONS.md` | **Selesai** | 15 asumsi produk + 22 keputusan teknis/desain, masing-masing dengan alasan dan dampak |
 | 2 | `docs/PROGRESS.md` | **Selesai** | Dokumen ini |
 | 3 | `docs/AI_USAGE.md` | **Selesai** | Termasuk log prompt dan daftar kesalahan AI yang tertangkap |
-| 4 | Video demo 3–5 menit | **Belum** | Direkam setelah UI jalan; tidak masuk akal merekam layar yang belum ada |
-| 5 | Screenshot 6 layar inti | **Sebagian** | 9 mockup desain ada di `docs/design-preview/`; screenshot aplikasi asli menyusul |
+| 4 | Video demo 3–5 menit | **Belum** | Alur yang akan direkam sudah bisa dijalankan lewat UI |
+| 5 | Screenshot 6 layar inti | **Sebagian** | 13 mockup desain ada di `docs/design-preview/`; screenshot aplikasi asli belum diekspor ke `docs/screenshots/` |
 
-**Dokumen tambahan (tidak diminta brief):** `docs/PROMPT-FRONTEND.md` — spesifikasi
-serah-terima untuk melanjutkan frontend: kontrak 23 endpoint, token desain, peta
-rute, dan definisi selesai. Ditulis supaya pekerjaan bisa dilanjutkan tanpa
-menebak, termasuk oleh saya sendiri di sesi berikutnya.
+**Dokumen tambahan (tidak diminta brief):**
+
+- `docs/PLAN-FRONTEND.md` — peta kerja 10 fase beserta gerbang lulusnya.
+- `docs/PROMPT-FRONTEND.md` — kontrak 23 endpoint, token desain, peta rute, dan
+  definisi selesai.
+- `docs/AI-HANDOFF.md` — alur kerja, konvensi kode, jebakan, dan sisa pekerjaan
+  untuk sesi AI berikutnya.
+
+Ketiganya ditulis supaya pekerjaan bisa dilanjutkan tanpa menebak, termasuk
+oleh saya sendiri di sesi berikutnya.
 
 ---
 
@@ -158,31 +166,62 @@ Temuan review dan perbaikannya:
 | Tab Riwayat Versi dan Approval hanya teks polos di kartu 600px | Riwayat Versi jadi daftar dua baris (nomor, pil status, tanggal berlaku, ringkasan, penulis); Approval jadi timeline tiga langkah dengan titik, garis penghubung, dan blok catatan. Tinggi kartu mengikuti isi: 260, 336, dan 252 (Konfirmasi) |
 | Layar 403 belum ada padahal disebut PROMPT | Frame 10 "Akses ditolak": kartu tengah 480×300, badge 403, dua tombol |
 
-### 2.7 Frontend (sebagian)
+### 2.7 Frontend (selesai)
 
-| Item | Status |
+| Item | Bukti |
 |---|---|
-| `client/src/index.css` — token Tailwind v4 (`@theme`) dari `DESIGN.md` | Ada |
-| `lib/api.ts` — fetch wrapper + penanganan error | Ada |
-| `lib/auth.tsx` — context sesi + guard | Ada |
-| `lib/format.ts` — tanggal & label status | Ada |
-| `components/ui.tsx`, `Icons.tsx`, `Markdown.tsx` | Ada |
-| `components/AppShell.tsx` — sidebar + topbar | Ada |
-| `pages/Login.tsx` | Ada |
-| `pages/Dashboard.tsx` | Ada |
-| `main.tsx` + router + 7 layar lain | **Belum** |
+| Fondasi: router, auth guard, shell, QueryClient, komponen common | `client/src/main.tsx`, `App.tsx`, `components/layout/`, `components/common/` |
+| Login & Dashboard | `pages/Login.tsx`, `pages/Dashboard.tsx` — 4 kartu, 2 tabel, pengumuman; semua angka dari `/dashboard/summary` |
+| Perpustakaan SOP | `pages/sop/SopListPage.tsx` — pencarian debounce 300 ms, filter, paginasi; state filter di URL |
+| Detail SOP 4 tab | `pages/sop/SopDetailPage.tsx`, `components/sop/DetailTabs.tsx` — tab aktif tersimpan di URL |
+| Aksi SOP & editor | `components/sop/ActionBar.tsx` — tombol dari `allowedActions`; dialog tolak/terbitkan/versi baru; editor markdown dua kolom |
+| Pengumuman | `pages/AnnouncementsPage.tsx` — form hanya HRD, hapus dengan konfirmasi |
+| Laporan pelanggaran | `pages/ReportsPage.tsx` — dua kolom, panel tindak lanjut hanya Manager/HRD |
+| Audit Log | `pages/AuditPage.tsx` — filter aktor/entitas/aksi, `before`/`after` di dalam `<details>` |
+| Pengguna | `pages/UsersPage.tsx` — read-only, 25 akun seed, paginasi 7 per halaman |
+| 403 & 404 | `pages/Forbidden.tsx`, `pages/NotFound.tsx` |
+
+Pengerjaan dibagi menjadi 10 fase (0–9), satu commit per fase. Setiap fase
+lulus gerbangnya sendiri sebelum lanjut: `npm run build -w client` hijau, endpoint
+diuji dengan curl termasuk satu kasus 403, dan screenshot dibaca.
+
+### 2.8 Verifikasi akhir
+
+| Pemeriksaan | Hasil |
+|---|---|
+| `npm run build` di root (server `tsc --noEmit` + client) | 0 error |
+| `npm test` | 23/23 hijau |
+| Screenshot 1440×1000 seluruh layar | Tidak ada teks terpotong, kolom kosong, atau dua CTA hijau |
+| Screenshot 390×844 (emulasi CDP) | Filter membungkus, kartu satu kolom, 4 tab detail muat, tabel scroll horizontal |
+| Sidebar mobile | `Sheet` 248px terbuka penuh, menu dan footer pengguna utuh |
+| Console browser di 10 rute | Bersih; hanya 401 `/auth/me` saat anonim dan `favicon.ico` 404 |
+| Cacat yang ditemukan & diperbaiki | Kartu "Menunggu tindakan Anda" memanjang mengikuti kolom kanan → grid diberi `items-start` |
 
 ---
 
 ## 3. Yang belum selesai
 
+Tidak ada pekerjaan fitur yang tersisa. Yang belum ada adalah deliverable
+serah terima:
+
 | Item | Perkiraan usaha | Catatan |
 |---|---|---|
-| `client/src/main.tsx` + router + guard rute | 1 jam | Tanpa ini `vite` tidak menyajikan apa pun — `index.html` menunjuk `/src/main.tsx` yang belum ada |
-| 7 layar: Daftar SOP, Detail SOP, Editor SOP, Pengumuman, Laporan, Audit Log, Pengguna | 6–8 jam | Desainnya sudah ada; tinggal disambungkan ke endpoint yang sudah ada |
-| `README.md` | 1 jam | Ditulis setelah aplikasi benar-benar bisa dijalankan |
-| Video demo 3–5 menit | 1 jam | Butuh aplikasi jalan |
-| Screenshot aplikasi asli di `docs/screenshots/` | 30 menit | Butuh aplikasi jalan |
+| `README.md` | 1 jam | Prasyarat, langkah setup, akun seed, perintah uji, troubleshooting |
+| Screenshot aplikasi asli di `docs/screenshots/` | 30 menit | 6 layar inti; mockup desain sudah ada di `docs/design-preview/` |
+| Video demo 3–5 menit | 1 jam | Alur PIC → Manager → HRD → Karyawan, lalu angka Dashboard berubah |
+| Finalisasi `PROGRESS.md` setelah rekaman | 15 menit | Menyebut hasil akhir dan menautkan video |
+
+Di luar cakupan dan tidak akan dikerjakan meski waktu tersisa (alasannya ada di
+`ASSUMPTIONS.md` §6): modul kuis, notifikasi email, lampiran file, penjadwalan
+review otomatis, SSO, aplikasi mobile.
+
+**Diketahui, sengaja dibiarkan:**
+
+- Entri audit dari login di mesin lokal menampilkan IP `::1`. Itu alamat
+  loopback yang sebenarnya; data seed tetap memakai IPv4 internal yang wajar.
+  Tidak diubah karena kolom IP adalah bukti, bukan hiasan.
+- `favicon.ico` belum ada sehingga console browser mencatat 404. Tidak
+  memengaruhi tampilan atau fungsi layar.
 
 ---
 
@@ -198,6 +237,16 @@ Temuan review dan perbaikannya:
 | Nama aksi audit tidak cocok | Service menulis `SOP_APPROVE`, tes mengharapkan `SOP_APPROVED` | Peta `AUDIT_ACTION` dengan bentuk past tense, satu sumber untuk service dan seed |
 | Peringatan `baseUrl` deprecated (TS 7.0) | `baseUrl` di `tsconfig` | Dihapus; path dipetakan relatif (`./src/*`). **Tidak** memakai `ignoreDeprecations: "6.0"` karena TS 5.9 hanya menerima `"5.0"` |
 | MCP desain tidak bisa konek | `~/.codebuddy/mcp.json` menunjuk aplikasi **Pen**, sedangkan `sop.fig` dibuka dengan **OpenPencil** — dua produk berbeda | Mendaftarkan server `open-pencil` per-proyek; setelah itu seluruh desain dikerjakan lewat tool tersebut |
+| `TS5102: Option 'baseUrl' has been deprecated` | TypeScript 7 menolak `baseUrl` | `baseUrl` dihapus; path dipetakan relatif (`"@/*": ["./src/*"]`) |
+| Build gagal di kelas `ApiError` | `erasableSyntaxOnly` melarang parameter properties di constructor | Field `status`, `code`, `details` dideklarasikan eksplisit |
+| Semua POST dibalas 403 | Vite pindah ke port 5174, sedangkan server memeriksa `Origin: http://localhost:5173` | `strictPort: true`; proses lama dimatikan sebelum `npm run dev` |
+| Jam tampil `13,18` alih-alih `13.18` | `toLocaleTimeString` mengikuti locale mesin | Semua tanggal lewat `formatDateTime` di `lib/format.ts` |
+| Dua tombol hijau dalam satu layar | Tiap komponen memutuskan sendiri tombol mana yang "utama" | Satu pemilik CTA di level halaman (`ActionBar`, `ReportsPage`) |
+| Underline tab menjadi kotak | `after:` pseudo-element pada label tab | `border-b-2` + `data-active:border-b-foreground` + `-mb-px` |
+| Filter departemen kosong untuk Karyawan | Opsi diambil dari `/users`, yang hanya terbuka untuk HRD/Auditor | Opsi diturunkan dari data yang memang terlihat (`/sops`), atau filter disembunyikan |
+| SOP terbit tampak "Draft" setelah versi baru | `Sop.status` (alur kerja) berbeda dari `currentVersion.status` (publikasi) | Kolom daftar memakai `isPublished`; banner draft hanya bila `draft.id !== published.id` |
+| Detail SOP tak berizin dibalas 404 | Aturan privasi server, bukan 403 | Panel "SOP tidak ditemukan", bukan halaman 403 |
+| Kolom Perubahan/IP di Audit kosong | Seed lama menulis `{seeded:true}` tanpa `before`/`after`/`ip` | Seed diperbaiki mengikuti bentuk payload service |
 
 ---
 
@@ -205,12 +254,11 @@ Temuan review dan perbaikannya:
 
 | Urutan | Pekerjaan | Definisi selesai |
 |---|---|---|
-| 1 | `main.tsx` + router + guard | `npm run dev` menyajikan aplikasi; login mengarah ke dashboard; rute terlarang menampilkan 403 |
-| 2 | Daftar SOP + Detail SOP | Cari, filter status, dan tab Riwayat/Approval/Konfirmasi terisi dari API nyata |
-| 3 | Editor SOP | Buat draft, sunting, ajukan; tombol aksi mengikuti `allowedActions()` dari server |
-| 4 | Pengumuman, Laporan, Audit Log, Pengguna | Empat layar sisa, masing-masing dengan state kosong dan state error |
-| 5 | README + screenshot + video | Penguji lain bisa menjalankan dari nol hanya dengan README |
+| 1 | `README.md` | Orang lain bisa menjalankan dari clone bersih dalam ≤ 5 perintah, tanpa mengedit kode |
+| 2 | Screenshot 6 layar inti | `docs/screenshots/` berisi gambar aplikasi asli, bukan mockup |
+| 3 | Video demo 3–5 menit | Siklus PIC → Manager → HRD → Karyawan terekam, angka Dashboard berubah setelah konfirmasi |
+| 4 | Finalisasi dokumen | `PROGRESS.md` menyebut hasil akhir dan menautkan video; `AI_USAGE.md` diperbarui bila ada temuan baru |
 
-**Garis berhenti tetap berlaku:** kalau waktu habis sebelum langkah 5, saya
-berhenti menambah fitur dan menyelesaikan dokumentasi + video, karena itu
-dinilai eksplisit sedangkan fitur yang belum jadi cukup dinyatakan belum jadi.
+**Garis berhenti tetap berlaku:** tidak ada lagi fitur yang ditambahkan. Sisa
+waktu dipakai untuk dokumentasi, screenshot, dan video, karena itu dinilai
+eksplisit sedangkan fitur yang belum jadi cukup dinyatakan belum jadi.
