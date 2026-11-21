@@ -21,6 +21,13 @@ const DEMO_ACCOUNTS = [
   { email: 'manajemen@ming.test', role: 'Manajemen' },
 ];
 
+/** Hanya terima path internal; jangan pernah kembali ke /login (loop). */
+function safeNext(value: string | null): string {
+  if (!value || !value.startsWith('/') || value.startsWith('//')) return '/';
+  if (value.startsWith('/login')) return '/';
+  return value;
+}
+
 export function LoginPage() {
   const { user, login } = useAuth();
   const navigate = useNavigate();
@@ -38,16 +45,14 @@ export function LoginPage() {
   });
 
   if (user) {
-    const next = params.get('next');
-    return <Navigate to={next && next.startsWith('/') ? next : '/'} replace />;
+    return <Navigate to={safeNext(params.get('next'))} replace />;
   }
 
   async function onSubmit(values: LoginValues) {
     setFormError(null);
     try {
       await login(values.email, values.password);
-      const next = params.get('next');
-      navigate(next && next.startsWith('/') ? next : '/', { replace: true });
+      navigate(safeNext(params.get('next')), { replace: true });
     } catch (error) {
       setFormError(
         error instanceof ApiError ? error.message : 'Tidak dapat masuk. Coba lagi sebentar lagi.',

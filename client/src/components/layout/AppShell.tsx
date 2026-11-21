@@ -68,8 +68,21 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         ))}
       </nav>
 
-      <div className="border-t border-[#ededed] px-5 py-4 text-xs text-muted-foreground">
-        MING SOP Center
+      <div className="border-t border-[#ededed] px-4 py-3">
+        <div className="flex items-center gap-2.5">
+          <Avatar className="size-8">
+            <AvatarFallback className="bg-secondary text-xs font-medium">
+              {initials(user.name)}
+            </AvatarFallback>
+          </Avatar>
+          <span className="min-w-0">
+            <span className="block truncate text-sm leading-4">{user.name}</span>
+            <span className="block truncate text-[11px] text-muted-foreground">
+              {ROLE_LABEL[user.role]}
+              {user.departmentName ? ` · ${user.departmentName}` : ''}
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -123,7 +136,7 @@ export function AppShell() {
             <Input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Cari SOP…"
+              placeholder="Cari SOP, kode, atau kata kunci…"
               aria-label="Cari SOP"
               className="pl-9"
             />
@@ -137,20 +150,14 @@ export function AppShell() {
             <DropdownMenuTrigger asChild>
               <button
                 type="button"
-                className="flex items-center gap-2 rounded-lg p-1 pr-2 hover:bg-secondary"
-                aria-label="Menu pengguna"
+                className="rounded-full p-0.5 hover:bg-secondary"
+                aria-label={`Menu pengguna ${user.name}`}
               >
                 <Avatar className="size-8">
                   <AvatarFallback className="bg-secondary text-xs font-medium">
                     {initials(user.name)}
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden text-left sm:block">
-                  <span className="block text-sm leading-4">{user.name}</span>
-                  <span className="block text-[11px] text-muted-foreground">
-                    {ROLE_LABEL[user.role]}
-                  </span>
-                </span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">

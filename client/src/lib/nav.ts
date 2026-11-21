@@ -21,10 +21,10 @@ const AUDIT_ROLES: Role[] = ['AUDITOR', 'HRD'];
 /** Sumber: server/src/policy.ts — jangan menambah menu yang tidak diizinkan server. */
 export const NAV: NavGroup[] = [
   {
-    title: 'Utama',
+    title: 'Menu Utama',
     items: [
       { to: '/', label: 'Dashboard', icon: LayoutDashboard, roles: ALL, end: true },
-      { to: '/sop', label: 'Daftar SOP', icon: FileText, roles: ALL },
+      { to: '/sop', label: 'Perpustakaan SOP', icon: FileText, roles: ALL },
     ],
   },
   {
