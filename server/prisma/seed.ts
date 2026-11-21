@@ -167,11 +167,31 @@ async function main() {
   ];
 
   let auditCount = 0;
-  const auditRow = (actorId: string, action: string, entityType: string, entityId: string, at: Date) => {
+  // IP stabil per aktor supaya kolom IP tidak berubah tiap kali seed dijalankan.
+  const actorIps = new Map<string, string>();
+  const ipFor = (actorId: string) => {
+    const existing = actorIps.get(actorId);
+    if (existing) return existing;
+    const n = actorIps.size;
+    const ip = `10.20.${4 + (n % 6)}.${10 + ((n * 7) % 60)}`;
+    actorIps.set(actorId, ip);
+    return ip;
+  };
+
+  const auditRow = (
+    actorId: string,
+    action: string,
+    entityType: string,
+    entityId: string,
+    at: Date,
+    payload: { before?: object; after?: object } = {},
+  ) => {
     auditCount++;
     return {
       actorId, action, entityType, entityId, createdAt: at,
-      after: { seeded: true } as object,
+      before: payload.before,
+      after: payload.after,
+      ip: ipFor(actorId),
     };
   };
 
@@ -232,9 +252,28 @@ async function main() {
       });
     }
 
+    // Payload audit meniru bentuk yang ditulis service agar kolom "Perubahan"
+    // di layar Audit Log terbaca: status sebelum → sesudah, atau versionNo.
+    const AUDIT_STEP = {
+      SUBMIT: { action: 'SOP_SUBMITTED', from: 'DRAFT', to: 'IN_REVIEW' },
+      APPROVE: { action: 'SOP_APPROVED', from: 'IN_REVIEW', to: 'APPROVED' },
+      PUBLISH: { action: 'SOP_PUBLISHED', from: 'APPROVED', to: 'PUBLISHED' },
+    } as const;
+
     const auditRows = [
-      auditRow(s.ownerId, 'SOP_CREATED', 'Sop', sop.id, created),
-      ...steps.map((st) => auditRow(st.actorId, ({ SUBMIT: 'SOP_SUBMITTED', APPROVE: 'SOP_APPROVED', PUBLISH: 'SOP_PUBLISHED' } as const)[st.action], 'Sop', sop.id, st.at)),
+      auditRow(s.ownerId, 'SOP_CREATED', 'Sop', sop.id, created, {
+        after: { code: s.code, title: s.title, status: 'DRAFT' },
+      }),
+      ...steps.map((st) => {
+        const step = AUDIT_STEP[st.action];
+        return auditRow(st.actorId, step.action, 'Sop', sop.id, st.at, {
+          before: { status: step.from },
+          after: {
+            status: step.to,
+            note: st.action === 'APPROVE' ? 'Disetujui, isi sudah sesuai kebijakan.' : null,
+          },
+        });
+      }),
     ];
 
     // Konfirmasi baca: sebagian karyawan departemen, sengaja tidak penuh.
@@ -245,7 +284,11 @@ async function main() {
         await db.acknowledgement.create({
           data: { sopVersionId: v1.id, userId: u.id, acknowledgedAt: ago(30 - i) },
         });
-        auditRows.push(auditRow(u.id, 'SOP_ACKNOWLEDGED', 'Sop', sop.id, ago(30 - i)));
+        auditRows.push(
+          auditRow(u.id, 'SOP_ACKNOWLEDGED', 'Sop', sop.id, ago(30 - i), {
+            after: { versionNo: 1 },
+          }),
+        );
       }
     }
 

@@ -10,6 +10,7 @@ export interface SopFilters {
 export interface AuditFilters {
   action?: string;
   entityType?: string;
+  actorId?: string;
   page?: number;
   limit?: number;
 }

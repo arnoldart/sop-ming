@@ -3,6 +3,7 @@ import { AppShell } from '@/components/layout/AppShell';
 import { RequireAuth } from '@/components/layout/RequireAuth';
 import { RequireRole } from '@/components/layout/RequireRole';
 import { AnnouncementsPage } from '@/pages/AnnouncementsPage';
+import { AuditPage } from '@/pages/AuditPage';
 import { DashboardPage } from '@/pages/Dashboard';
 import { Forbidden } from '@/pages/Forbidden';
 import { LoginPage } from '@/pages/Login';
@@ -48,7 +49,7 @@ export default function App() {
             path="audit"
             element={
               <RequireRole roles={['AUDITOR', 'HRD']}>
-                <Placeholder title="Audit Log" />
+                <AuditPage />
               </RequireRole>
             }
           />

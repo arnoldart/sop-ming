@@ -63,6 +63,14 @@ export const ACTION_LABEL: Record<string, string> = {
   REPORT_STATUS_CHANGED: 'Status laporan diubah',
 };
 
+/** `entityType` di audit log memakai nama model Prisma, bukan bahasa Indonesia. */
+export const ENTITY_LABEL: Record<string, string> = {
+  Sop: 'SOP',
+  Announcement: 'Pengumuman',
+  ViolationReport: 'Laporan',
+  User: 'Pengguna',
+};
+
 export function initials(name: string) {
   return name
     .split(' ')
