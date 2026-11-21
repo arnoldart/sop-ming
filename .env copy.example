@@ -1,0 +1,9 @@
+# PostgreSQL lokal (default). Container alternatif memakai port 5433.
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/sop_center?schema=public"
+
+# Ganti dengan string acak >= 32 karakter
+SESSION_SECRET="dev-only-secret-change-me-please-32chars"
+
+PORT=4000
+CLIENT_ORIGIN="http://localhost:5173"
+NODE_ENV="development"
