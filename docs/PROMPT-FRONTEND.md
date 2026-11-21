@@ -122,15 +122,15 @@ Aturan visual yang harus diikuti:
 - Tombol primary: latar `primary`, teks `on-primary` (**hitam, bukan putih** —
   putih di atas hijau ini gagal kontras).
 - Pil status: radius penuh, border 1px `hairline-cool`, teks 12px.
-- Label kolom tabel: 11px, weight 500, warna `ink-mute-2`, huruf kapital.
-- Baris tabel: tinggi 58px, garis pemisah 1px `hairline-cool`, tanpa zebra.
+- Label kolom tabel: 12px, weight 500, warna `ink-mute`, huruf kapital.
+- Baris tabel: tinggi 56px, garis pemisah 1px `hairline-cool`, tanpa zebra.
 - Satu warna hijau per layar. Kalau ada dua tombol, hanya satu yang hijau.
 
 ---
 
 ## Layar yang harus dibuat
 
-Referensi visual ada di `sop.fig` (buka dengan OpenPencil) — 9 frame
+Referensi visual ada di `sop.fig` (buka dengan OpenPencil) — 13 frame
 berderet horizontal, masing-masing 1440×900. Ekspor PNG-nya ada di
 `docs/design-preview/`. Ikuti tata letaknya, tetapi **implementasikan dengan
 HTML/CSS biasa** — jangan meniru posisi absolutnya.
@@ -147,6 +147,7 @@ HTML/CSS biasa** — jangan meniru posisi absolutnya.
 | `/laporan` | Laporan pelanggaran | `08 Laporan` | semua; panel tindak lanjut hanya MANAGER/HRD |
 | `/audit` | Audit Log | `06 Audit Log` | AUDITOR, HRD |
 | `/pengguna` | Pengguna (read-only) | `09 Pengguna` | AUDITOR, HRD |
+| — | Akses ditolak (403) | `10 Akses ditolak` | rute apa pun yang perannya tidak berhak |
 
 ### Perilaku yang wajib ada
 

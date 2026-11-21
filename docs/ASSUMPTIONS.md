@@ -86,14 +86,14 @@ Asumsi ini diambil dari PRD §5.3 dan diperluas dengan alasannya.
 | Hijau emerald `#3ECF8E` hanya untuk satu aksi utama per layar | Hijau untuk semua tombol | Kalau semua tombol hijau, tidak ada lagi yang menonjol. Satu warna aksen hanya berguna bila langka |
 | Teks di atas hijau berwarna `#171717`, bukan putih | Putih | Kontras putih di atas `#3ECF8E` hanya ~1.9:1 — gagal WCAG. `#171717` memberi ~9:1 |
 | Radius 6px untuk tombol, 12px untuk kartu, 999px untuk pil | Satu radius untuk semua | Skala radius adalah bagian dari bahasa visual; tombol bersudut tegas membaca "alat", kartu lembut membaca "wadah" |
-| 9 layar @1440×900 di `sop.fig` | Wireframe low-fidelity | Penilai perlu melihat keputusan visual, bukan kotak abu-abu |
+| 13 frame @1440×900 di `sop.fig` (9 layar + 4 tab Detail SOP + 403) | Wireframe low-fidelity | Penilai perlu melihat keputusan visual, bukan kotak abu-abu |
 | Tata letak absolut di file desain | Auto-layout | Tool `render` yang tersedia tidak mendukung auto-layout; absolut memberi hasil deterministik dan bisa direproduksi |
 
 ### Deviasi kecil dari `DESIGN.md`
 
 | Hal | `DESIGN.md` | Yang dipakai | Alasan |
 |---|---|---|---|
-| Label tersier 11–12px | `ink-mute-2` `#9A9A9A` | `#A3A3A3` | Pada 11px di layar non-retina, `#9A9A9A` terbaca sebagai noise; `#A3A3A3` tetap lolos kontras untuk teks non-esensial. Implementasi cukup memakai satu token `text-faint` |
+| Label tersier 11–12px | `ink-mute-2` `#9A9A9A` | `#707070` (`ink-mute`) | Klaim lama di baris ini salah: `#9A9A9A` hanya 2.81:1 dan `#A3A3A3` 2.52:1 di atas putih — keduanya gagal WCAG AA (4.5:1). Seluruh teks sekunder memakai `ink-mute` `#707070` (4.95:1); token `text-faint` tidak dipakai di file desain |
 | Font display | Circular | Inter 500 | Circular berlisensi; `DESIGN.md` sendiri menetapkan Inter sebagai padanan open-source terdekat |
 
 ---

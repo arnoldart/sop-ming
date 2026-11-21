@@ -110,23 +110,53 @@ Tes memakai database terpisah `sop_center_test` yang dibuat `globalSetup` lewat
 
 ### 2.6 Desain
 
-9 layar 1440×900 di `sop.fig`, semuanya lewat MCP `open-pencil`:
+13 frame 1440×900 di `sop.fig`, semuanya lewat MCP `open-pencil`. Frame
+disusun berjajar pada `y = 0`, jarak antar frame 1520px, lebar konten 1128px
+(sidebar 248 + padding 32 + 1128 + 32 = 1440):
 
-| # | Layar | Node ID |
-|---|---|---|
-| 01 | Login | `1940361353:104` |
-| 02 | Dashboard | `1940361353:255` |
-| 03 | Daftar SOP | `1940361353:370` |
-| 04 | Detail SOP (tab Isi / Riwayat / Approval / Konfirmasi) | `1940361353:620` |
-| 05 | Editor SOP | `1940361353:732` |
-| 06 | Audit Log | `1940361353:828` |
-| 07 | Pengumuman | `1940361353:962` |
-| 08 | Laporan | `1940361353:1049` |
-| 09 | Pengguna | `1940361353:1150` |
+| # | Layar | Node ID | x |
+|---|---|---|---|
+| 01 | Login | `0:4` | 0 |
+| 02 | Dashboard | `0:38` | 1520 |
+| 03 | Daftar SOP | `0:151` | 3040 |
+| 04 | Detail SOP — tab Isi | `0:285` | 4560 |
+| 04b | Detail SOP — tab Riwayat Versi | `997516146:29` | 6080 |
+| 04c | Detail SOP — tab Approval | `997516146:103` | 7600 |
+| 04d | Detail SOP — tab Konfirmasi | `997516146:177` | 9120 |
+| 05 | Editor SOP | `0:395` | 10640 |
+| 06 | Audit Log | `0:489` | 12160 |
+| 07 | Pengumuman | `0:619` | 13680 |
+| 08 | Laporan | `0:706` | 15200 |
+| 09 | Pengguna | `0:801` | 16720 |
+| 10 | Akses ditolak (403) | `997516146:271` | 18240 |
 
-Ekspor PNG untuk review: `docs/design-preview/` (9 layar + 1 detail panel).
-Setiap layar sudah diperiksa secara visual dan cacat tata letaknya diperbaiki
-(tumpang tindih teks, pil yang melipat, label yang terpotong).
+Detail SOP dipecah menjadi empat frame karena PRD §4.4 mewajibkan empat tab;
+satu frame per tab membuat state aktif, underline tab, dan isi panel bisa
+diperiksa tanpa menyembunyikan layer.
+
+Ekspor PNG untuk review: `docs/design-preview/`. Setiap layar sudah diperiksa
+secara visual dan cacat tata letaknya diperbaiki (tumpang tindih teks, pil yang
+melipat, label yang terpotong, tombol Sunting pada SOP berstatus terbit).
+
+### 2.6.1 Perbaikan desain (review 2026-11-21)
+
+Temuan review dan perbaikannya:
+
+| Temuan | Perbaikan |
+|---|---|
+| Tombol "Sunting" tetap tampil pada SOP berstatus Terbit (melanggar US-2) | Dihapus dari layar 04 |
+| Highlight navigasi layar 09 bernama "Nav active Laporan" | Diganti nama menjadi "Nav active Pengguna" |
+| Kolom PERUBAHAN di Audit Log terpotong | Kolom digeser ke `x = 1040`, teks dipendekkan, `auto_resize` diset |
+| Stat 2/3/4 di layar 09 tidak sejajar grid | Disetel ke `x = 565 / 850 / 1135`, lebar 273, jarak 12 — keempat kartu kini menempati 280…1408 |
+| Kontras teks gagal WCAG AA (140 error) | Seluruh teks sekunder `#9A9A9A`/`#A3A3A3`/`#B2B2B2` → `#707070` (4.95:1). Lint kontras: 0 error |
+| Pil status "Terbit" memakai hijau penuh sehingga bersaing dengan CTA | Diganti `#D8F8E9` (primary-soft), teks tetap `#171717`. Berlaku juga untuk pil "Selesai" di layar 08 |
+| Label tabel 11px | Dinaikkan ke 12px |
+| Tinggi baris tabel 64px | 56px, tinggi tabel 492 → 436, footer dan pagination naik 56px |
+| Sel IP di Audit Log berisi `::1` (alamat loopback) sehingga terbaca seperti ikon | Diisi IPv4 internal yang wajar (`10.20.4.18` dst.) |
+| Layar 08 punya dua tombol hijau penuh ("Buat laporan" dan "Simpan tindak lanjut") | "Buat laporan" jadi tombol garis; hanya "Simpan tindak lanjut" yang hijau — satu CTA per viewport |
+| Kartu daftar laporan menyisakan 184px kosong di bawah | Catatan kaki dipindah ke footer kartu dengan garis pemisah di `y = 536` |
+| Tab Riwayat Versi dan Approval hanya teks polos di kartu 600px | Riwayat Versi jadi daftar dua baris (nomor, pil status, tanggal berlaku, ringkasan, penulis); Approval jadi timeline tiga langkah dengan titik, garis penghubung, dan blok catatan. Tinggi kartu mengikuti isi: 260, 336, dan 252 (Konfirmasi) |
+| Layar 403 belum ada padahal disebut PROMPT | Frame 10 "Akses ditolak": kartu tengah 480×300, badge 403, dua tombol |
 
 ### 2.7 Frontend (sebagian)
 
