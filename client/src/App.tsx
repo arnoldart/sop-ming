@@ -8,6 +8,7 @@ import { Forbidden } from '@/pages/Forbidden';
 import { LoginPage } from '@/pages/Login';
 import { NotFound } from '@/pages/NotFound';
 import { Placeholder } from '@/pages/Placeholder';
+import { ReportsPage } from '@/pages/ReportsPage';
 import { SopDetailPage } from '@/pages/sop/SopDetailPage';
 import { SopEditorPage } from '@/pages/sop/SopEditorPage';
 import { SopListPage } from '@/pages/sop/SopListPage';
@@ -41,7 +42,7 @@ export default function App() {
           />
 
           <Route path="pengumuman" element={<AnnouncementsPage />} />
-          <Route path="laporan" element={<Placeholder title="Laporan pelanggaran" />} />
+          <Route path="laporan" element={<ReportsPage />} />
 
           <Route
             path="audit"

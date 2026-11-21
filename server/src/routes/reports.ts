@@ -18,8 +18,12 @@ reportRouter.get(
       where: canTriage ? {} : { reporterId: user.id },
       include: {
         sop: { select: { id: true, code: true, title: true } },
+        reporter: { select: { name: true } },
         assignedTo: { select: { name: true } },
-        followUps: { orderBy: { createdAt: 'asc' } },
+        followUps: {
+          orderBy: { createdAt: 'asc' },
+          include: { actor: { select: { name: true } } },
+        },
       },
       orderBy: { createdAt: 'desc' },
       take: 50,
@@ -34,12 +38,15 @@ reportRouter.get(
         createdAt: r.createdAt,
         sop: r.sop,
         anonymous: r.reporterId === null,
+        // Nama pelapor hanya dikirim untuk laporan yang tidak anonim.
+        reporterName: r.reporterId ? (r.reporter?.name ?? null) : null,
         assignedTo: r.assignedTo?.name ?? null,
         followUps: r.followUps.map((f) => ({
           id: f.id,
           fromStatus: f.fromStatus,
           toStatus: f.toStatus,
           note: f.note,
+          actorName: f.actor.name,
           createdAt: f.createdAt,
         })),
       })),

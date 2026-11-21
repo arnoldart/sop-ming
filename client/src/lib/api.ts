@@ -223,14 +223,21 @@ export interface Report {
   createdAt: string;
   sop: { id: string; code: string; title: string } | null;
   anonymous: boolean;
+  reporterName: string | null;
   assignedTo: string | null;
   followUps: {
     id: string;
     fromStatus: string;
     toStatus: string;
     note: string;
+    actorName: string;
     createdAt: string;
   }[];
+}
+
+export interface ReportsResponse {
+  canTriage: boolean;
+  items: Report[];
 }
 
 export interface AuditEntry {

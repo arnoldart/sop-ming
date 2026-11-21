@@ -36,7 +36,7 @@ export const STATUS_LABEL: Record<string, string> = {
   SUPERSEDED: 'Digantikan',
   ARCHIVED: 'Diarsipkan',
   OPEN: 'Baru',
-  TRIAGED: 'Ditriase',
+  TRIAGED: 'Diverifikasi',
   INVESTIGATING: 'Investigasi',
   RESOLVED: 'Selesai',
   CLOSED: 'Ditutup',
