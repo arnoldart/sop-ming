@@ -106,6 +106,7 @@ export interface SopListItem {
   effectiveDate: string | null;
   acknowledgementCount: number;
   acknowledgedByMe: boolean;
+  updatedAt: string;
 }
 
 export interface SopListResponse {

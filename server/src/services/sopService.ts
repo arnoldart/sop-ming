@@ -117,6 +117,7 @@ export async function listSops(user: SessionUser, query: ListQuery) {
       effectiveDate: r.currentVersion?.effectiveDate ?? null,
       acknowledgementCount: r.currentVersion?._count.acknowledgements ?? 0,
       acknowledgedByMe: r.currentVersionId ? ackedSet.has(r.currentVersionId) : false,
+      updatedAt: r.updatedAt,
     })),
   };
 }

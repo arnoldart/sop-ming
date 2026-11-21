@@ -8,9 +8,9 @@ import { cn } from '@/lib/utils';
  */
 const TONE: Record<string, string> = {
   PUBLISHED: 'border-transparent bg-[#D8F8E9] text-foreground',
-  APPROVED: 'border-transparent bg-[#D8F8E9] text-foreground',
   RESOLVED: 'border-transparent bg-[#D8F8E9] text-foreground',
-  IN_REVIEW: 'border-border bg-secondary text-foreground',
+  APPROVED: 'border-transparent bg-foreground text-background',
+  IN_REVIEW: 'border-border bg-background text-foreground',
   TRIAGED: 'border-border bg-secondary text-foreground',
   INVESTIGATING: 'border-border bg-secondary text-foreground',
   DRAFT: 'border-border bg-background text-muted-foreground',

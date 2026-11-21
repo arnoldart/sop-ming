@@ -7,6 +7,7 @@ import { Forbidden } from '@/pages/Forbidden';
 import { LoginPage } from '@/pages/Login';
 import { NotFound } from '@/pages/NotFound';
 import { Placeholder } from '@/pages/Placeholder';
+import { SopListPage } from '@/pages/sop/SopListPage';
 
 export default function App() {
   return (
@@ -17,7 +18,7 @@ export default function App() {
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />
 
-          <Route path="sop" element={<Placeholder title="Daftar SOP" />} />
+          <Route path="sop" element={<SopListPage />} />
           <Route
             path="sop/new"
             element={
