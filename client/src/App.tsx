@@ -8,11 +8,11 @@ import { DashboardPage } from '@/pages/Dashboard';
 import { Forbidden } from '@/pages/Forbidden';
 import { LoginPage } from '@/pages/Login';
 import { NotFound } from '@/pages/NotFound';
-import { Placeholder } from '@/pages/Placeholder';
 import { ReportsPage } from '@/pages/ReportsPage';
 import { SopDetailPage } from '@/pages/sop/SopDetailPage';
 import { SopEditorPage } from '@/pages/sop/SopEditorPage';
 import { SopListPage } from '@/pages/sop/SopListPage';
+import { UsersPage } from '@/pages/UsersPage';
 
 export default function App() {
   return (
@@ -57,7 +57,7 @@ export default function App() {
             path="pengguna"
             element={
               <RequireRole roles={['AUDITOR', 'HRD']}>
-                <Placeholder title="Pengguna" />
+                <UsersPage />
               </RequireRole>
             }
           />
