@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { AppShell } from '@/components/layout/AppShell';
 import { RequireAuth } from '@/components/layout/RequireAuth';
 import { RequireRole } from '@/components/layout/RequireRole';
+import { AnnouncementsPage } from '@/pages/AnnouncementsPage';
 import { DashboardPage } from '@/pages/Dashboard';
 import { Forbidden } from '@/pages/Forbidden';
 import { LoginPage } from '@/pages/Login';
@@ -39,7 +40,7 @@ export default function App() {
             }
           />
 
-          <Route path="pengumuman" element={<Placeholder title="Pengumuman" />} />
+          <Route path="pengumuman" element={<AnnouncementsPage />} />
           <Route path="laporan" element={<Placeholder title="Laporan pelanggaran" />} />
 
           <Route

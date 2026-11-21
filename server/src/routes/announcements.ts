@@ -12,8 +12,18 @@ announcementRouter.get(
   requireAuth,
   wrap(async (req, res) => {
     const user = req.user!;
+    // HRD dan Auditor melihat semua pengumuman; peran lain hanya yang menyasar
+    // departemennya atau tanpa sasaran.
+    const seesAll = user.role === 'HRD' || user.role === 'AUDITOR';
     const rows = await db.announcement.findMany({
-      where: { OR: [{ targetDepartmentId: null }, { targetDepartmentId: user.departmentId ?? '__none__' }] },
+      where: seesAll
+        ? {}
+        : {
+            OR: [
+              { targetDepartmentId: null },
+              { targetDepartmentId: user.departmentId ?? '__none__' },
+            ],
+          },
       include: { createdBy: { select: { name: true } }, sop: { select: { id: true, code: true, title: true } } },
       orderBy: { createdAt: 'desc' },
       take: 50,

@@ -253,12 +253,16 @@ async function main() {
   }
 
   console.log('Membuat pengumuman...');
-  const publishedSops = await db.sop.findMany({ where: { status: 'PUBLISHED' }, take: 3 });
+  const [sopRekrutmen, sopCuti, sopShift] = await Promise.all([
+    db.sop.findFirst({ where: { code: 'SOP-HRD-001' } }),
+    db.sop.findFirst({ where: { code: 'SOP-HRD-002' } }),
+    db.sop.findFirst({ where: { code: 'SOP-OPR-001' } }),
+  ]);
   await db.announcement.createMany({
     data: [
-      { title: 'Sosialisasi SOP Rekrutmen versi terbaru', body: 'Seluruh kepala departemen diminta membaca SOP-HRD-001 sebelum mengajukan permintaan tenaga kerja.', sopId: publishedSops[0]?.id, createdById: hrd.id, createdAt: ago(9) },
-      { title: 'Pengingat konfirmasi SOP Cuti', body: 'Karyawan yang belum mengonfirmasi SOP cuti diminta menyelesaikan sebelum akhir bulan.', sopId: publishedSops[1]?.id, createdById: hrd.id, createdAt: ago(5) },
-      { title: 'Perubahan alur serah terima shift', body: 'Formulir serah terima shift kini wajib diisi melalui sistem, bukan kertas.', sopId: publishedSops[2]?.id, createdById: hrd.id, createdAt: ago(2) },
+      { title: 'Sosialisasi SOP Rekrutmen versi terbaru', body: 'Seluruh kepala departemen diminta membaca SOP-HRD-001 sebelum mengajukan permintaan tenaga kerja.', sopId: sopRekrutmen?.id, createdById: hrd.id, createdAt: ago(9) },
+      { title: 'Pengingat konfirmasi SOP Cuti', body: 'Karyawan yang belum mengonfirmasi SOP cuti diminta menyelesaikan sebelum akhir bulan.', sopId: sopCuti?.id, createdById: hrd.id, createdAt: ago(5) },
+      { title: 'Perubahan alur serah terima shift', body: 'Formulir serah terima shift kini wajib diisi melalui sistem, bukan kertas.', sopId: sopShift?.id, createdById: hrd.id, createdAt: ago(2) },
     ],
   });
 
