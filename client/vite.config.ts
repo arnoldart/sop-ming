@@ -12,6 +12,9 @@ export default defineConfig({
     },
   },
   server: {
+    port: 5173,
+    // Server menolak mutasi dari origin lain; jangan biarkan Vite pindah port.
+    strictPort: true,
     proxy: {
       '/api': 'http://localhost:4000',
     },
