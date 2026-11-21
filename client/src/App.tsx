@@ -8,6 +8,7 @@ import { LoginPage } from '@/pages/Login';
 import { NotFound } from '@/pages/NotFound';
 import { Placeholder } from '@/pages/Placeholder';
 import { SopDetailPage } from '@/pages/sop/SopDetailPage';
+import { SopEditorPage } from '@/pages/sop/SopEditorPage';
 import { SopListPage } from '@/pages/sop/SopListPage';
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
             path="sop/new"
             element={
               <RequireRole roles={['PIC_SOP']}>
-                <Placeholder title="Editor SOP" note="Formulir pembuatan SOP sedang dibangun." />
+                <SopEditorPage />
               </RequireRole>
             }
           />
@@ -33,7 +34,7 @@ export default function App() {
             path="sop/:id/edit"
             element={
               <RequireRole roles={['PIC_SOP']}>
-                <Placeholder title="Editor SOP" note="Formulir penyuntingan SOP sedang dibangun." />
+                <SopEditorPage />
               </RequireRole>
             }
           />

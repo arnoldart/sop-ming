@@ -4,6 +4,7 @@ import { FileQuestion } from 'lucide-react';
 import { ApiError, api, type SopDetail } from '@/lib/api';
 import { queryKeys } from '@/lib/queryKeys';
 import { ErrorState } from '@/components/common/ErrorState';
+import { ActionBar } from '@/components/sop/ActionBar';
 import { DetailHeader } from '@/components/sop/DetailHeader';
 import { DetailTabs, isDetailTab } from '@/components/sop/DetailTabs';
 import { Button } from '@/components/ui/button';
@@ -82,7 +83,7 @@ export function SopDetailPage() {
 
   return (
     <div className="space-y-5">
-      <DetailHeader sop={query.data} />
+      <DetailHeader sop={query.data} actions={<ActionBar sop={query.data} />} />
       <DetailTabs sop={query.data} tab={tab} onTabChange={changeTab} />
     </div>
   );

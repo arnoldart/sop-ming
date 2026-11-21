@@ -72,6 +72,13 @@ export function fieldErrors(error: unknown): Record<string, string> {
   return Object.fromEntries(error.details.map((d) => [d.field, d.message]));
 }
 
+/** Pesan siap tampil untuk toast; server selalu mengirim pesan berbahasa Indonesia. */
+export function errorMessage(error: unknown, fallback = 'Terjadi kesalahan. Coba lagi.') {
+  if (error instanceof ApiError) return error.message;
+  if (error instanceof Error) return error.message;
+  return fallback;
+}
+
 export const api = {
   get: <T>(path: string) => request<T>(path),
   post: <T>(path: string, body?: unknown) =>

@@ -53,7 +53,7 @@ function ContentPanel({ sop }: { sop: SopDetail }) {
       </header>
 
       <div className="px-6 py-6">
-        {draft && published ? (
+        {draft && published && draft.id !== published.id ? (
           <p className="mb-5 rounded-md border border-[#ededed] bg-secondary px-3 py-2 text-[13px] text-muted-foreground">
             Draf v{draft.versionNo} sedang disiapkan. Isi di bawah adalah draf; versi terbit masih v
             {published.versionNo}.
