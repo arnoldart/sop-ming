@@ -7,6 +7,7 @@ import { Forbidden } from '@/pages/Forbidden';
 import { LoginPage } from '@/pages/Login';
 import { NotFound } from '@/pages/NotFound';
 import { Placeholder } from '@/pages/Placeholder';
+import { SopDetailPage } from '@/pages/sop/SopDetailPage';
 import { SopListPage } from '@/pages/sop/SopListPage';
 
 export default function App() {
@@ -27,7 +28,7 @@ export default function App() {
               </RequireRole>
             }
           />
-          <Route path="sop/:id" element={<Placeholder title="Detail SOP" />} />
+          <Route path="sop/:id" element={<SopDetailPage />} />
           <Route
             path="sop/:id/edit"
             element={

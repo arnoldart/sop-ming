@@ -125,6 +125,9 @@ export interface SopVersion {
   effectiveDate: string | null;
   publishedAt: string | null;
   createdAt: string;
+  /** Hanya ada pada ringkasan riwayat versi, bukan pada currentVersion/draftVersion. */
+  authorName?: string;
+  authorRole?: Role;
 }
 
 export interface SopDetail {

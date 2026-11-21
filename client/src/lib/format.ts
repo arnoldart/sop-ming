@@ -9,13 +9,11 @@ export function formatDate(value: string | null | undefined) {
 
 export function formatDateTime(value: string | null | undefined) {
   if (!value) return '—';
-  return new Date(value).toLocaleString('id-ID', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const date = new Date(value);
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  // Bentuk "14 Nov 2026 · 09.12" mengikuti frame desain, dan tidak bergantung locale mesin.
+  return `${formatDate(value)} · ${hours}.${minutes}`;
 }
 
 export function relativeTime(value: string) {

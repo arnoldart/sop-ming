@@ -142,7 +142,10 @@ export async function getSop(user: SessionUser, id: string) {
       department: true,
       owner: { select: { id: true, name: true } },
       currentVersion: true,
-      versions: { orderBy: { versionNo: 'desc' } },
+      versions: {
+        orderBy: { versionNo: 'desc' },
+        include: { createdBy: { select: { name: true, role: true } } },
+      },
     },
   });
   if (!sop) throw notFound('SOP');
@@ -210,6 +213,8 @@ export async function getSop(user: SessionUser, id: string) {
       effectiveDate: v.effectiveDate,
       publishedAt: v.publishedAt,
       createdAt: v.createdAt,
+      authorName: v.createdBy.name,
+      authorRole: v.createdBy.role,
     })),
     approvals: approvals.map((a) => ({
       id: a.id,
