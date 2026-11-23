@@ -46,13 +46,13 @@ export const PANDUAN: PanduanSection[] = [
         type: 'callout',
         text: 'Lupa password? Hubungi HRD. Di aplikasi ini tidak ada reset password mandiri.',
       },
-      { type: 'image', src: '/panduan/login.png', alt: 'Halaman masuk MING SOP Center' },
+      { type: 'image', src: '/panduan-assets/login.png', alt: 'Halaman masuk MING SOP Center' },
       { type: 'heading', text: 'Mengenal layar utama' },
       {
         type: 'paragraph',
         text: 'Dashboard merangkum pekerjaan yang menunggu Anda, kepatuhan konfirmasi, dan pengumuman terbaru. Kotak pencarian di header mencari SOP lewat judul, kode, atau kata kunci.',
       },
-      { type: 'image', src: '/panduan/dashboard.png', alt: 'Dashboard setelah masuk' },
+      { type: 'image', src: '/panduan-assets/dashboard.png', alt: 'Dashboard setelah masuk' },
       {
         type: 'callout',
         text: 'Kalau sebuah menu tidak terlihat, berarti peran Anda tidak memiliki akses ke sana. Server tetap menolak akses langsung lewat alamat, bukan hanya menyembunyikan tombol.',
@@ -80,12 +80,12 @@ export const PANDUAN: PanduanSection[] = [
       },
       {
         type: 'image',
-        src: '/panduan/daftar-berlaku.png',
+        src: '/panduan-assets/daftar-berlaku.png',
         alt: 'Daftar SOP yang disaring ke status Terbit',
       },
       {
         type: 'image',
-        src: '/panduan/detail-konfirmasi.png',
+        src: '/panduan-assets/detail-konfirmasi.png',
         alt: 'Tombol Konfirmasi baca pada halaman detail SOP',
       },
       {
@@ -94,7 +94,7 @@ export const PANDUAN: PanduanSection[] = [
       },
       {
         type: 'image',
-        src: '/panduan/setelah-konfirmasi.png',
+        src: '/panduan-assets/setelah-konfirmasi.png',
         alt: 'Keadaan halaman setelah konfirmasi tersimpan',
       },
       { type: 'heading', text: 'Melaporkan dugaan pelanggaran' },
@@ -109,7 +109,7 @@ export const PANDUAN: PanduanSection[] = [
       },
       {
         type: 'image',
-        src: '/panduan/dialog-laporan.png',
+        src: '/panduan-assets/dialog-laporan.png',
         alt: 'Dialog Buat laporan dengan pilihan anonim',
       },
       {
@@ -121,7 +121,7 @@ export const PANDUAN: PanduanSection[] = [
         type: 'paragraph',
         text: 'Menu Pengumuman menampilkan pengumuman untuk semua departemen dan pengumuman yang ditujukan ke departemen Anda.',
       },
-      { type: 'image', src: '/panduan/pengumuman-karyawan.png', alt: 'Daftar pengumuman' },
+      { type: 'image', src: '/panduan-assets/pengumuman-karyawan.png', alt: 'Daftar pengumuman' },
       {
         type: 'callout',
         text: 'Belum ada notifikasi saat SOP baru terbit. Buka aplikasi untuk melihat SOP terbaru.',
@@ -149,8 +149,8 @@ export const PANDUAN: PanduanSection[] = [
           'Pilih Simpan untuk menyimpan sebagai Draft, atau Ajukan review untuk langsung mengirim ke Manager.',
         ],
       },
-      { type: 'image', src: '/panduan/pic-daftar.png', alt: 'Tombol Buat SOP pada daftar SOP' },
-      { type: 'image', src: '/panduan/form-sop.png', alt: 'Form SOP baru beserta pratinjau' },
+      { type: 'image', src: '/panduan-assets/pic-daftar.png', alt: 'Tombol Buat SOP pada daftar SOP' },
+      { type: 'image', src: '/panduan-assets/form-sop.png', alt: 'Form SOP baru beserta pratinjau' },
       { type: 'heading', text: 'Mengubah SOP yang sudah terbit' },
       {
         type: 'steps',
@@ -163,7 +163,7 @@ export const PANDUAN: PanduanSection[] = [
       },
       {
         type: 'image',
-        src: '/panduan/pic-detail-buat-versi.png',
+        src: '/panduan-assets/pic-detail-buat-versi.png',
         alt: 'Tombol Buat versi baru pada SOP yang sudah terbit',
       },
       {
@@ -193,12 +193,12 @@ export const PANDUAN: PanduanSection[] = [
       },
       {
         type: 'image',
-        src: '/panduan/manager-detail-review.png',
+        src: '/panduan-assets/manager-detail-review.png',
         alt: 'Tombol Setujui dan Tolak pada SOP yang menunggu persetujuan',
       },
       {
         type: 'image',
-        src: '/panduan/manager-dialog-tolak.png',
+        src: '/panduan-assets/manager-dialog-tolak.png',
         alt: 'Dialog penolakan dengan alasan wajib',
       },
       {
@@ -228,12 +228,12 @@ export const PANDUAN: PanduanSection[] = [
       },
       {
         type: 'image',
-        src: '/panduan/hrd-detail-terbitkan.png',
+        src: '/panduan-assets/hrd-detail-terbitkan.png',
         alt: 'Tombol Terbitkan pada SOP berstatus Siap terbit',
       },
       {
         type: 'image',
-        src: '/panduan/hrd-dialog-terbit.png',
+        src: '/panduan-assets/hrd-dialog-terbit.png',
         alt: 'Dialog penerbitan dengan tanggal berlaku',
       },
       { type: 'heading', text: 'Menerbitkan pengumuman' },
@@ -241,7 +241,7 @@ export const PANDUAN: PanduanSection[] = [
         type: 'paragraph',
         text: 'Buka Pengumuman, isi judul dan isi pengumuman, pilih sasaran (semua departemen atau satu departemen), lalu tekan Terbitkan.',
       },
-      { type: 'image', src: '/panduan/hrd-pengumuman.png', alt: 'Form pengumuman untuk HRD' },
+      { type: 'image', src: '/panduan-assets/hrd-pengumuman.png', alt: 'Form pengumuman untuk HRD' },
       { type: 'heading', text: 'Menindaklanjuti laporan' },
       {
         type: 'steps',
@@ -252,7 +252,7 @@ export const PANDUAN: PanduanSection[] = [
           'Setiap perubahan tersimpan sebagai riwayat baru dan tercatat di audit log.',
         ],
       },
-      { type: 'image', src: '/panduan/laporan.png', alt: 'Panel tindak lanjut laporan' },
+      { type: 'image', src: '/panduan-assets/laporan.png', alt: 'Panel tindak lanjut laporan' },
       {
         type: 'callout',
         text: 'Belum ada modul Surat Peringatan. Keputusan sanksi dicatat sebagai catatan tindak lanjut, bukan sebagai data terstruktur.',
@@ -277,8 +277,8 @@ export const PANDUAN: PanduanSection[] = [
           'Buka Pengguna untuk melihat daftar akun, peran, dan departemen.',
         ],
       },
-      { type: 'image', src: '/panduan/audit-log.png', alt: 'Audit log dengan filter aksi' },
-      { type: 'image', src: '/panduan/pengguna.png', alt: 'Daftar pengguna' },
+      { type: 'image', src: '/panduan-assets/audit-log.png', alt: 'Audit log dengan filter aksi' },
+      { type: 'image', src: '/panduan-assets/pengguna.png', alt: 'Daftar pengguna' },
       {
         type: 'callout',
         text: 'Audit log tidak dapat diubah atau dihapus dari aplikasi, termasuk oleh HRD.',
@@ -287,7 +287,7 @@ export const PANDUAN: PanduanSection[] = [
         type: 'paragraph',
         text: 'Auditor tidak dapat mengonfirmasi baca, menyetujui, menerbitkan, atau menindaklanjuti laporan. Halaman yang bukan hak Anda menampilkan Akses ditolak.',
       },
-      { type: 'image', src: '/panduan/akses-ditolak.png', alt: 'Halaman Akses ditolak' },
+      { type: 'image', src: '/panduan-assets/akses-ditolak.png', alt: 'Halaman Akses ditolak' },
     ],
   },
   {
@@ -308,8 +308,8 @@ export const PANDUAN: PanduanSection[] = [
           'Bagian Kepatuhan terendah menunjukkan SOP yang paling sedikit dikonfirmasi.',
         ],
       },
-      { type: 'image', src: '/panduan/dashboard.png', alt: 'Dashboard ringkasan' },
-      { type: 'image', src: '/panduan/daftar-sop.png', alt: 'Daftar SOP' },
+      { type: 'image', src: '/panduan-assets/dashboard.png', alt: 'Dashboard ringkasan' },
+      { type: 'image', src: '/panduan-assets/daftar-sop.png', alt: 'Daftar SOP' },
       {
         type: 'callout',
         text: 'Manajemen bersifat hanya-baca: tidak ada tombol setujui, terbitkan, atau konfirmasi. Kartu Menunggu tindakan dan Perlu konfirmasi tidak relevan untuk peran ini.',
