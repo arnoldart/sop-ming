@@ -8,6 +8,7 @@ import { DashboardPage } from '@/pages/Dashboard';
 import { Forbidden } from '@/pages/Forbidden';
 import { LoginPage } from '@/pages/Login';
 import { NotFound } from '@/pages/NotFound';
+import { PanduanPage } from '@/pages/PanduanPage';
 import { ReportsPage } from '@/pages/ReportsPage';
 import { SopDetailPage } from '@/pages/sop/SopDetailPage';
 import { SopEditorPage } from '@/pages/sop/SopEditorPage';
@@ -63,6 +64,7 @@ export default function App() {
           />
 
           <Route path="403" element={<Forbidden />} />
+          <Route path="panduan" element={<PanduanPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Route>

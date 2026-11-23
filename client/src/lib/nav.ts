@@ -1,6 +1,6 @@
 import type { Role } from '@sop/shared';
 import type { LucideIcon } from 'lucide-react';
-import { FileText, Flag, History, LayoutDashboard, Megaphone, Users } from 'lucide-react';
+import { BookOpen, FileText, Flag, History, LayoutDashboard, Megaphone, Users } from 'lucide-react';
 
 export interface NavItem {
   to: string;
@@ -34,6 +34,7 @@ export const NAV: NavGroup[] = [
       { to: '/laporan', label: 'Laporan', icon: Flag, roles: ALL },
       { to: '/audit', label: 'Audit Log', icon: History, roles: AUDIT_ROLES },
       { to: '/pengguna', label: 'Pengguna', icon: Users, roles: AUDIT_ROLES },
+      { to: '/panduan', label: 'Panduan', icon: BookOpen, roles: ALL },
     ],
   },
 ];
