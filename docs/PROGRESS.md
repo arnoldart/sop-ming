@@ -15,7 +15,7 @@ memakai `allowedActions` dari server, `npm run build` keluar 0, dan `npm test`
 tetap 23/23.
 
 Artinya: aplikasi bisa dijalankan dan diperiksa end-to-end, termasuk lewat demo
-daring. Yang tersisa bukan fitur, melainkan video demo.
+daring. Seluruh deliverable brief sudah terpenuhi.
 
 ---
 
@@ -28,7 +28,7 @@ daring. Yang tersisa bukan fitur, melainkan video demo.
 | 2 | `docs/ASSUMPTIONS.md` | **Selesai** | 15 asumsi produk + 22 keputusan teknis/desain, masing-masing dengan alasan dan dampak |
 | 2 | `docs/PROGRESS.md` | **Selesai** | Dokumen ini |
 | 3 | `docs/AI_USAGE.md` | **Selesai** | Termasuk log prompt dan daftar kesalahan AI yang tertangkap |
-| 4 | Video demo 3–5 menit | **Belum** | Alur yang akan direkam sudah bisa dijalankan lewat UI |
+| 4 | Video demo 3–5 menit | **Tidak dibuat** | Opsional menurut brief ("bila tersedia"); alurnya bisa dijalankan langsung lewat link demo |
 | 5 | Screenshot 6 layar inti | **Selesai** | 8 screenshot aplikasi asli di `docs/screenshots/`, diambil dari instance daring |
 | 6 | Link demo | **Selesai** | <https://sopming.arnoldartworks.my.id>, akun demo tercantum di README |
 
@@ -201,19 +201,18 @@ diuji dengan curl termasuk satu kasus 403, dan screenshot dibaca.
 
 ## 3. Yang belum selesai
 
-Tidak ada pekerjaan fitur yang tersisa. Yang belum ada adalah deliverable
-serah terima:
+Tidak ada. Seluruh deliverable brief sudah ada di repo atau bisa diperiksa
+langsung lewat demo daring.
 
-| Item | Perkiraan usaha | Catatan |
-|---|---|---|
-| `README.md` | 1 jam | Prasyarat, langkah setup, akun seed, perintah uji, troubleshooting |
-| Screenshot aplikasi asli di `docs/screenshots/` | 30 menit | 6 layar inti; mockup desain sudah ada di `docs/design-preview/` |
-| Video demo 3–5 menit | 1 jam | Alur PIC → Manager → HRD → Karyawan, lalu angka Dashboard berubah |
-| Finalisasi `PROGRESS.md` setelah rekaman | 15 menit | Menyebut hasil akhir dan menautkan video |
+Satu-satunya yang tidak dibuat adalah video demo 3–5 menit. Brief menyebutnya
+opsional — "link demo, screenshot, **atau** video singkat **bila tersedia**" —
+dan alur yang seharusnya direkam sudah bisa dijalankan sendiri di
+<https://sopming.arnoldartworks.my.id>. Tidak ada pekerjaan yang tertunda
+karenanya.
 
-Di luar cakupan dan tidak akan dikerjakan meski waktu tersisa (alasannya ada di
-`ASSUMPTIONS.md` §6): modul kuis, notifikasi email, lampiran file, penjadwalan
-review otomatis, SSO, aplikasi mobile.
+Di luar cakupan dan tidak akan dikerjakan (alasannya ada di `ASSUMPTIONS.md`
+§6): modul kuis, notifikasi email, lampiran file, penjadwalan review otomatis,
+SSO, aplikasi mobile.
 
 **Diketahui, sengaja dibiarkan:**
 
@@ -248,17 +247,3 @@ review otomatis, SSO, aplikasi mobile.
 | Detail SOP tak berizin dibalas 404 | Aturan privasi server, bukan 403 | Panel "SOP tidak ditemukan", bukan halaman 403 |
 | Kolom Perubahan/IP di Audit kosong | Seed lama menulis `{seeded:true}` tanpa `before`/`after`/`ip` | Seed diperbaiki mengikuti bentuk payload service |
 
----
-
-## 5. Rencana berikutnya
-
-| Urutan | Pekerjaan | Definisi selesai |
-|---|---|---|
-| 1 | `README.md` | Orang lain bisa menjalankan dari clone bersih dalam ≤ 5 perintah, tanpa mengedit kode |
-| 2 | Screenshot 6 layar inti | `docs/screenshots/` berisi gambar aplikasi asli, bukan mockup |
-| 3 | Video demo 3–5 menit | Siklus PIC → Manager → HRD → Karyawan terekam, angka Dashboard berubah setelah konfirmasi |
-| 4 | Finalisasi dokumen | `PROGRESS.md` menyebut hasil akhir dan menautkan video; `AI_USAGE.md` diperbarui bila ada temuan baru |
-
-**Garis berhenti tetap berlaku:** tidak ada lagi fitur yang ditambahkan. Sisa
-waktu dipakai untuk dokumentasi, screenshot, dan video, karena itu dinilai
-eksplisit sedangkan fitur yang belum jadi cukup dinyatakan belum jadi.
