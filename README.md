@@ -4,6 +4,8 @@ Aplikasi internal untuk mengelola siklus hidup Standard Operating Procedure (SOP
 
 Dibangun sebagai monorepo npm workspaces: API Express + Prisma + PostgreSQL, SPA React + Vite + Tailwind, dan satu paket `shared` yang menjadi sumber kebenaran tipe, aturan transisi status, serta skema validasi untuk kedua sisi.
 
+> **Demo daring:** <https://43-134-234-66.sslip.io> — berisi data dummy. Akun contoh `hrd@ming.test` / `password123`; daftar lengkap ada di [Akun demo](#akun-demo). Bentuk deployment dan prosedur rilis ulang ada di [`docs/DEPLOY.md`](docs/DEPLOY.md).
+
 ---
 
 ## Daftar isi
@@ -148,7 +150,7 @@ Semua akun memakai password yang sama: `password123`.
 | `manajemen@ming.test` | Manajemen | Teknologi Informasi |
 | `karyawan1.opr@ming.test` … `karyawan4.opr@ming.test` | Karyawan | Operasional |
 
-Pola `karyawan{1-4}.{hrd|opr|fin|it}@ming.test` berlaku untuk semua departemen. Seed bersifat idempoten: menjalankannya berulang tidak menggandakan data.
+Pola `karyawan{1-4}.{hrd|opr|fin|it}@ming.test` berlaku untuk semua departemen. Seed bersifat idempoten dengan cara **menghapus seluruh data lalu membuatnya ulang**, jadi jangan dijalankan setelah ada data yang ingin dipertahankan.
 
 ---
 
@@ -280,3 +282,4 @@ Bagian ini sengaja ditulis terbuka agar penilai tidak perlu menebak.
 | [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md) | Asumsi yang diambil saat requirement ambigu |
 | [`docs/AI_USAGE.md`](docs/AI_USAGE.md) | Catatan penggunaan AI selama pengerjaan |
 | [`docs/AI-HANDOFF.md`](docs/AI-HANDOFF.md) | Konvensi kode dan jebakan bagi kontributor berikutnya |
+| [`docs/DEPLOY.md`](docs/DEPLOY.md) | Bentuk deployment, prosedur rilis ulang, dan verifikasi |
