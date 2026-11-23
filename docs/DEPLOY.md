@@ -6,18 +6,25 @@ Dokumen ini mencatat bentuk deployment yang berjalan saat ini dan langkah rilis 
 
 | Item | Nilai |
 |---|---|
-| Host | `43.134.234.66` (Ubuntu 24.04) |
-| URL | <https://43-134-234-66.sslip.io> |
+| Host | `43.134.234.66` (Ubuntu 24.04), di belakang proxy Cloudflare |
+| URL | <https://sopming.arnoldartworks.my.id> |
 | Folder aplikasi | `/opt/sop-center` |
 | Port API | `4100` (hanya `127.0.0.1`) |
 | Service | `sop-center.service` (systemd, `Restart=always`) |
 | Web server | Nginx, menyajikan `client/dist` dan mem-proxy `/api/` |
 | Database | PostgreSQL 16 lokal, database `sop_center`, role `sop_center` |
-| Sertifikat | Let's Encrypt untuk `43-134-234-66.sslip.io`, diperbarui otomatis oleh certbot |
+| Sertifikat | Let's Encrypt untuk `sopming.arnoldartworks.my.id`, diperbarui otomatis oleh certbot |
 
 Alasan satu origin: cookie sesi memakai `SameSite=Lax` dan server menolak mutasi yang `Origin`-nya bukan `CLIENT_ORIGIN`. Memisahkan frontend dan API ke dua domain akan membuat login gagal.
 
 Port `4000` sengaja tidak dipakai karena sudah dirujuk konfigurasi situs lain di server yang sama. Aplikasi ini memakai `4100`.
+
+## Cloudflare
+
+- DNS: record `A` dengan nama `sopming` mengarah ke `43.134.234.66`, proxy Cloudflare aktif.
+- Mode SSL/TLS saat ini **Flexible**: Cloudflare menerima HTTPS dari browser lalu menghubungi origin lewat HTTP. Karena itu Nginx melayani aplikasi di port 80; blok 443 tetap disiapkan dengan sertifikat Let's Encrypt.
+- Konsekuensi: segmen Cloudflare → origin tidak terenkripsi. Untuk pemakaian nyata, ubah mode ke **Full (strict)**; setelah itu redirect 80 → 443 bisa diaktifkan kembali.
+- Jangan menambahkan redirect paksa ke HTTPS selama mode masih Flexible — Cloudflare akan meneruskannya bolak-balik dan halaman berakhir `301` berulang.
 
 ## Rilis ulang
 
@@ -51,18 +58,18 @@ Build client sengaja dilakukan di lokal karena RAM server hanya 1,9 GB dan sudah
 ## Verifikasi setelah rilis
 
 ```bash
-curl -s https://43-134-234-66.sslip.io/api/health
+curl -s https://sopming.arnoldartworks.my.id/api/health
 # {"ok":true}
 
-curl -s -o /dev/null -w "%{http_code}\n" https://43-134-234-66.sslip.io/
+curl -s -o /dev/null -w "%{http_code}\n" https://sopming.arnoldartworks.my.id/
 # 200
 
-curl -s -o /dev/null -w "%{http_code}\n" https://43-134-234-66.sslip.io/sop
+curl -s -o /dev/null -w "%{http_code}\n" https://sopming.arnoldartworks.my.id/sop
 # 200 (SPA fallback)
 
-curl -s -c /tmp/jar -X POST https://43-134-234-66.sslip.io/api/auth/login \
+curl -s -c /tmp/jar -X POST https://sopming.arnoldartworks.my.id/api/auth/login \
   -H 'Content-Type: application/json' \
-  -H 'Origin: https://43-134-234-66.sslip.io' \
+  -H 'Origin: https://sopming.arnoldartworks.my.id' \
   -d '{"email":"hrd@ming.test","password":"password123"}'
 # 200 + data user
 ```
