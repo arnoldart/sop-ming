@@ -93,7 +93,7 @@ function DashboardBody({ data }: { data: DashboardSummary }) {
           label="Kepatuhan konfirmasi"
           value={data.cards.compliancePercent}
           suffix="%"
-          hint={`${data.cards.openReports} laporan terbuka`}
+          hint="Rata-rata seluruh SOP terbit"
         />
       </div>
 
@@ -124,13 +124,15 @@ function DashboardBody({ data }: { data: DashboardSummary }) {
             </Link>
           ))}
 
-          <div className="px-5 py-4">
-            <p className="text-sm font-medium">Belum ada pekerjaan lain</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Antrean persetujuan dan draft Anda sedang kosong. SOP yang perlu keputusan akan muncul
-              di sini.
-            </p>
-          </div>
+          {data.pendingActions.length === 0 ? (
+            <div className="px-5 py-4">
+              <p className="text-sm font-medium">Belum ada pekerjaan lain</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Antrean persetujuan dan draft Anda sedang kosong. SOP yang perlu keputusan akan
+                muncul di sini.
+              </p>
+            </div>
+          ) : null}
         </Section>
 
         <Section

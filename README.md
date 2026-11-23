@@ -11,6 +11,7 @@ Dibangun sebagai monorepo npm workspaces: API Express + Prisma + PostgreSQL, SPA
 ## Daftar isi
 
 - [Fitur](#fitur)
+- [Tangkapan layar](#tangkapan-layar)
 - [Tech stack](#tech-stack)
 - [Struktur repositori](#struktur-repositori)
 - [Menjalankan di lokal](#menjalankan-di-lokal)
@@ -41,6 +42,26 @@ Dibangun sebagai monorepo npm workspaces: API Express + Prisma + PostgreSQL, SPA
 | **Manajemen pengguna** | Daftar pengguna dan perannya (read-only) untuk Auditor dan HRD. |
 
 Otorisasi sepenuhnya ditegakkan di server. UI hanya menyembunyikan tombol yang tidak diizinkan; setiap endpoint tetap memeriksa izin dan kepemilikan.
+
+---
+
+## Tangkapan layar
+
+Diambil dari instance daring dengan data seed.
+
+| Halaman masuk | Dashboard HRD |
+|---|---|
+| ![Halaman masuk](docs/screenshots/01-login.png) | ![Dashboard HRD](docs/screenshots/02-dashboard-hrd.png) |
+
+| Perpustakaan SOP | Detail SOP |
+|---|---|
+| ![Daftar SOP](docs/screenshots/03-daftar-sop.png) | ![Detail SOP](docs/screenshots/04-detail-sop.png) |
+
+| Form SOP baru | Laporan dan tindak lanjut |
+|---|---|
+| ![Form SOP](docs/screenshots/05-form-sop.png) | ![Laporan](docs/screenshots/06-laporan-tindak-lanjut.png) |
+
+Dua layar lain — audit log dan daftar pengguna — ada di [`docs/screenshots/`](docs/screenshots).
 
 ---
 

@@ -1,6 +1,6 @@
 # PROGRESS — MING SOP Center
 
-> Status per **2026-11-21**, commit `eb4e95c`. Dokumen ini ditulis apa adanya:
+> Status per **2026-11-23**, commit `57cff59`. Dokumen ini ditulis apa adanya:
 > yang selesai disebut dengan buktinya, yang belum disebut tanpa dibungkus.
 
 ---
@@ -14,9 +14,8 @@ frame). Frontend **selesai dan tersambung ke API nyata**: 10 rute, seluruh aksi
 memakai `allowedActions` dari server, `npm run build` keluar 0, dan `npm test`
 tetap 23/23.
 
-Artinya: aplikasi bisa dijalankan dan diperiksa end-to-end. Yang tersisa bukan
-fitur, melainkan deliverable serah terima: `README.md`, screenshot aplikasi
-asli, dan video demo.
+Artinya: aplikasi bisa dijalankan dan diperiksa end-to-end, termasuk lewat demo
+daring. Yang tersisa bukan fitur, melainkan video demo.
 
 ---
 
@@ -24,13 +23,14 @@ asli, dan video demo.
 
 | # | Deliverable | Status | Catatan |
 |---|---|---|---|
-| 1 | `README.md` — prasyarat, setup, akun seed, perintah uji | **Belum** | Aplikasi sudah berjalan, jadi langkahnya bisa ditulis dan dibuktikan dari clone bersih |
+| 1 | `README.md` — prasyarat, setup, akun seed, perintah uji | **Selesai** | Termasuk bagian demo daring, keputusan desain, dan batasan yang diketahui |
 | 2 | `docs/PRD.md` | **Selesai** | 366 baris, 10 user story dengan AC, matriks izin 6×11 |
 | 2 | `docs/ASSUMPTIONS.md` | **Selesai** | 15 asumsi produk + 22 keputusan teknis/desain, masing-masing dengan alasan dan dampak |
 | 2 | `docs/PROGRESS.md` | **Selesai** | Dokumen ini |
 | 3 | `docs/AI_USAGE.md` | **Selesai** | Termasuk log prompt dan daftar kesalahan AI yang tertangkap |
 | 4 | Video demo 3–5 menit | **Belum** | Alur yang akan direkam sudah bisa dijalankan lewat UI |
-| 5 | Screenshot 6 layar inti | **Sebagian** | 13 mockup desain ada di `docs/design-preview/`; screenshot aplikasi asli belum diekspor ke `docs/screenshots/` |
+| 5 | Screenshot 6 layar inti | **Selesai** | 8 screenshot aplikasi asli di `docs/screenshots/`, diambil dari instance daring |
+| 6 | Link demo | **Selesai** | <https://sopming.arnoldartworks.my.id>, dijelaskan di `docs/DEPLOY.md` |
 
 **Dokumen tambahan (tidak diminta brief):**
 
