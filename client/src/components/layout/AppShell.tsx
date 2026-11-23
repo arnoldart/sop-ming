@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Bell, LogOut, Menu, Search } from 'lucide-react';
 import { ROLE_LABEL } from '@sop/shared';
 import { useAuth } from '@/lib/auth';
@@ -91,10 +91,15 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 export function AppShell() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [query, setQuery] = useState('');
 
   if (!user) return null;
+
+  // Halaman panduan berisi artikel + screenshot; di layar lebar kolom 1128px
+  // menyisakan terlalu banyak ruang kosong, jadi kanvasnya dilebarkan.
+  const wide = pathname.startsWith('/panduan');
 
   async function handleLogout() {
     await logout();
@@ -174,7 +179,12 @@ export function AppShell() {
           </DropdownMenu>
         </header>
 
-        <main className="mx-auto w-full max-w-[1128px] px-4 py-6 lg:px-8">
+        <main
+          className={cn(
+            'mx-auto w-full px-4 py-6 lg:px-8',
+            wide ? 'max-w-[1128px] xl:max-w-[1320px] 2xl:max-w-[1400px]' : 'max-w-[1128px]',
+          )}
+        >
           <Outlet />
         </main>
       </div>
