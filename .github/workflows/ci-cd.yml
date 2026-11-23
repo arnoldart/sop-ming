@@ -102,36 +102,33 @@ jobs:
           tar czf /tmp/release.tar.gz -C /tmp/release .
           ls -lh /tmp/release.tar.gz
 
-      - name: Install sshpass
+      - name: Setup SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq sshpass
-
-      - name: Trust host key
-        run: |
+          set -euo pipefail
+          if [ -z "${SSH_PRIVATE_KEY:-}" ]; then
+            echo "::error::Secret SSH_KEY belum diisi di repo ini."
+            exit 1
+          fi
           mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
           chmod 600 ~/.ssh/known_hosts
 
       - name: Upload release
-        env:
-          SSHPASS: ${{ secrets.SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          if [ -z "${SSHPASS:-}" ]; then
-            echo "::error::Secret SSH_PASSWORD belum diisi di repo ini."
-            exit 1
-          fi
-          sshpass -e scp -o StrictHostKeyChecking=yes \
+          scp -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
             /tmp/release.tar.gz "$SSH_USER@$SSH_HOST:/tmp/sop-release.tar.gz"
 
       - name: Deploy
         env:
-          SSHPASS: ${{ secrets.SSH_PASSWORD }}
           LOCK_HASH: ${{ hashFiles('package-lock.json') }}
         run: |
           set -euo pipefail
-          sshpass -e ssh -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" \
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" \
             "EXPECTED_LOCK='$LOCK_HASH' APP_DIR='$APP_DIR' API_HEALTH='$API_HEALTH' bash -s" <<'REMOTE'
           set -euo pipefail
 
