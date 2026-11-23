@@ -1,0 +1,187 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "24"
+  SSH_HOST: "43.134.234.66"
+  SSH_USER: "ubuntu"
+  APP_DIR: "/opt/sop-center"
+  API_HEALTH: "http://127.0.0.1:4100/api/health"
+
+jobs:
+  verify:
+    name: Build & test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: sop_center_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate --schema server/prisma/schema.prisma
+
+      - name: Type-check & build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      - name: Upload client build
+        uses: actions/upload-artifact@v7
+        with:
+          name: client-dist
+          path: client/dist
+          retention-days: 3
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy production
+    needs: verify
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: production
+      url: https://sopming.arnoldartworks.my.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Download client build
+        uses: actions/download-artifact@v8
+        with:
+          name: client-dist
+          path: client/dist
+
+      - name: Stage release
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/release
+          # Kirim source + dist saja; .env server tidak pernah ikut terkirim.
+          rsync -a \
+            --exclude node_modules --exclude .git --exclude .github \
+            --exclude .env --exclude '.env.*' --exclude dist \
+            --exclude docs --exclude sop.fig \
+            ./ /tmp/release/
+          cp -r client/dist /tmp/release/client/dist
+          tar czf /tmp/release.tar.gz -C /tmp/release .
+          ls -lh /tmp/release.tar.gz
+
+      - name: Install sshpass
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq sshpass
+
+      - name: Trust host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Upload release
+        env:
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SSHPASS:-}" ]; then
+            echo "::error::Secret SSH_PASSWORD belum diisi di repo ini."
+            exit 1
+          fi
+          sshpass -e scp -o StrictHostKeyChecking=yes \
+            /tmp/release.tar.gz "$SSH_USER@$SSH_HOST:/tmp/sop-release.tar.gz"
+
+      - name: Deploy
+        env:
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
+          LOCK_HASH: ${{ hashFiles('package-lock.json') }}
+        run: |
+          set -euo pipefail
+          sshpass -e ssh -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" \
+            "EXPECTED_LOCK='$LOCK_HASH' APP_DIR='$APP_DIR' API_HEALTH='$API_HEALTH' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          # Node 24 hanya ada lewat nvm; shell non-interaktif memakai Node 18 sistem.
+          NODE_BIN="$(ls -d /home/ubuntu/.nvm/versions/node/v24*/bin 2>/dev/null | sort -V | tail -1 || true)"
+          if [ -z "$NODE_BIN" ]; then
+            echo "Node v24 tidak ditemukan di /home/ubuntu/.nvm" >&2
+            exit 1
+          fi
+          export PATH="$NODE_BIN:$PATH"
+          echo "Node $(node -v) / npm $(npm -v)"
+
+          cd "$APP_DIR"
+          tar xzf /tmp/sop-release.tar.gz -C "$APP_DIR"
+          rm -f /tmp/sop-release.tar.gz
+
+          if [ ! -f server/.env ]; then
+            echo "server/.env tidak ditemukan — deploy dibatalkan agar konfigurasi tidak hilang" >&2
+            exit 1
+          fi
+
+          # npm ci hanya saat lockfile berubah; server hanya punya ~1,9 GB RAM.
+          CURRENT_LOCK="$(cat .deploy-lock-hash 2>/dev/null || true)"
+          if [ "$CURRENT_LOCK" != "$EXPECTED_LOCK" ]; then
+            echo "package-lock berubah -> npm ci"
+            npm ci --no-audit --no-fund
+            printf '%s\n' "$EXPECTED_LOCK" > .deploy-lock-hash
+          else
+            echo "package-lock tidak berubah -> lewati npm ci"
+          fi
+
+          # Prisma memuat DATABASE_URL dari server/.env, jadi harus jalan dari server/.
+          cd "$APP_DIR/server"
+          ../node_modules/.bin/prisma generate --schema prisma/schema.prisma
+          ../node_modules/.bin/prisma migrate deploy --schema prisma/schema.prisma
+
+          sudo -n systemctl restart sop-center
+
+          ok=0
+          for _ in $(seq 1 20); do
+            if curl -fsS "$API_HEALTH" >/dev/null 2>&1; then ok=1; break; fi
+            sleep 2
+          done
+
+          if [ "$ok" != "1" ]; then
+            echo "Health check gagal setelah restart" >&2
+            sudo -n systemctl status sop-center --no-pager || true
+            sudo -n journalctl -u sop-center -n 40 --no-pager || true
+            exit 1
+          fi
+
+          echo "Deploy selesai: $(curl -s "$API_HEALTH")"
+          REMOTE

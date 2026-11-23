@@ -6,3 +6,6 @@ dist/
 .DS_Store
 coverage/
 docs/screenshots/*.mp4
+
+# Catatan deploy berisi detail infrastruktur; jangan masuk repo.
+docs/DEPLOY.md
