@@ -25,6 +25,7 @@ Port `4000` sengaja tidak dipakai karena sudah dirujuk konfigurasi situs lain di
 - Mode SSL/TLS saat ini **Flexible**: Cloudflare menerima HTTPS dari browser lalu menghubungi origin lewat HTTP. Karena itu Nginx melayani aplikasi di port 80; blok 443 tetap disiapkan dengan sertifikat Let's Encrypt.
 - Konsekuensi: segmen Cloudflare → origin tidak terenkripsi. Untuk pemakaian nyata, ubah mode ke **Full (strict)**; setelah itu redirect 80 → 443 bisa diaktifkan kembali.
 - Jangan menambahkan redirect paksa ke HTTPS selama mode masih Flexible — Cloudflare akan meneruskannya bolak-balik dan halaman berakhir `301` berulang.
+- Nginx meneruskan `CF-Connecting-IP` sebagai `X-Forwarded-For` (fallback ke `$remote_addr` bila header tidak ada), sehingga audit log mencatat IP pengunjung, bukan IP edge Cloudflare.
 
 ## Rilis ulang
 
