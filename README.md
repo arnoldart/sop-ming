@@ -4,7 +4,7 @@ Aplikasi internal untuk mengelola siklus hidup Standard Operating Procedure (SOP
 
 Dibangun sebagai monorepo npm workspaces: API Express + Prisma + PostgreSQL, SPA React + Vite + Tailwind, dan satu paket `shared` yang menjadi sumber kebenaran tipe, aturan transisi status, serta skema validasi untuk kedua sisi.
 
-> **Demo daring:** <https://sopming.arnoldartworks.my.id> — berisi data dummy. Akun contoh `hrd@ming.test` / `password123`; daftar lengkap ada di [Akun demo](#akun-demo). Bentuk deployment dan prosedur rilis ulang ada di [`docs/DEPLOY.md`](docs/DEPLOY.md).
+> **Demo daring:** <https://sopming.arnoldartworks.my.id> — berisi data dummy. Akun contoh `hrd@ming.test` / `password123`; daftar lengkap ada di [Akun demo](#akun-demo).
 
 ---
 
@@ -303,4 +303,3 @@ Bagian ini sengaja ditulis terbuka agar penilai tidak perlu menebak.
 | [`docs/ASSUMPTIONS.md`](docs/ASSUMPTIONS.md) | Asumsi yang diambil saat requirement ambigu |
 | [`docs/AI_USAGE.md`](docs/AI_USAGE.md) | Catatan penggunaan AI selama pengerjaan |
 | [`docs/AI-HANDOFF.md`](docs/AI-HANDOFF.md) | Konvensi kode dan jebakan bagi kontributor berikutnya |
-| [`docs/DEPLOY.md`](docs/DEPLOY.md) | Bentuk deployment, prosedur rilis ulang, dan verifikasi |

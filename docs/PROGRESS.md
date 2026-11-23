@@ -30,7 +30,7 @@ daring. Yang tersisa bukan fitur, melainkan video demo.
 | 3 | `docs/AI_USAGE.md` | **Selesai** | Termasuk log prompt dan daftar kesalahan AI yang tertangkap |
 | 4 | Video demo 3–5 menit | **Belum** | Alur yang akan direkam sudah bisa dijalankan lewat UI |
 | 5 | Screenshot 6 layar inti | **Selesai** | 8 screenshot aplikasi asli di `docs/screenshots/`, diambil dari instance daring |
-| 6 | Link demo | **Selesai** | <https://sopming.arnoldartworks.my.id>, dijelaskan di `docs/DEPLOY.md` |
+| 6 | Link demo | **Selesai** | <https://sopming.arnoldartworks.my.id>, akun demo tercantum di README |
 
 **Dokumen tambahan (tidak diminta brief):**
 
